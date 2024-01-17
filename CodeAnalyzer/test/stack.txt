@@ -1,0 +1,120 @@
+class Stack
+    def initialize
+        @array = Array.new
+    end
+    def push(c)
+        @array.push(c)
+    end
+    def pop
+        @array.pop
+    end
+    def top
+        @array.last
+    end
+end
+
+require ’Stack’
+class Compf < Stack
+    def compile(str)
+        "(#{str})".each_byte { |c| processSymbol(c.chr) }
+    end
+
+    private
+    def symType(c)
+        case c
+        when ’(’
+            SYM_LEFT
+        when ’)’
+            SYM_RIGHT
+        when ’+’, ’-’, ’*’, ’/’
+            SYM_OPER
+        else
+            symOther(c)
+        end
+    end
+
+    def processSymbol(c)
+        case symType(c)
+        when SYM_LEFT
+            push(c)
+        when SYM_RIGHT
+            processSuspendedSymbol(c)
+            pop
+        when SYM_OPER
+            processSuspendedSymbol(c)
+            push(c)
+        when SYM_OTHER
+            nextOther(c)
+        end
+    end
+
+    def processSuspendedSymbol(c)
+        while precedes(top, c)
+            nextOper(pop)
+        end
+    end
+
+    def priority(c)
+        (c == ’+’ or c == ’-’) ? 1 : 2
+    end
+    def precedes(a, b)
+        return false if symType(a) == SYM_LEFT
+        return true if symType(b) == SYM_RIGHT
+        priority(a) >= priority(b)
+    end
+
+    protected
+    SYM_LEFT = 0; SYM_RIGHT = 1;
+    SYM_OPER = 2; SYM_OTHER = 3
+
+    def symOther(c)
+        # Сравнение символа с образцом (регулярным выражением).
+        raise "Недопустимый символ #{c}" if c !~ /[a-z]/
+        SYM_OTHER
+    end
+
+    def nextOper(c)
+        print "#{c} "
+    end
+
+    def nextOther(c)
+        nextOper(c)
+    end
+end
+
+require ’Compf’
+class Calc < Compf
+    def initialize
+        # Вызов метода initialize базового класса Compf.
+        super
+        # Создание стека результатов операций.
+        @s = Stack.new
+    end
+
+    def compile(str)
+        super
+        return @s.topя
+    end
+
+    protected
+    def symOther(c)
+        raise "Недопустимый символ #{c}" if c !~ /[0-9]/
+        SYM_OTHER
+    end
+
+    def nextOper(c)
+        second, first = @s.pop, @s.pop
+        @s.push(first.method(c).call(second))
+    end
+
+    def nextOther(c)
+        @s.push(c.to_i)
+    end
+end
+
+require "Calc"
+c = Calc.new
+while true
+    print "\nВведите формулу -> "
+    c.compile(readline.chomp)
+end

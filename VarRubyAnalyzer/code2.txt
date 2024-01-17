@@ -1,0 +1,39 @@
+#!/usr/bin/ruby
+
+for i in 0..5
+    for j in 0..5
+        for n in 0..5
+            for m in 0..5
+                sum = i + j + n + m
+                puts "i = #{i}"
+                puts "j = "
+                puts j
+                puts "n = #{n}"
+                puts "m = #{m}"
+                puts "sum = #{sum}"
+                if(sum < 5)
+                	puts "sum меньше 5"
+                elsif(sum < 10)
+			case (sum)
+				when
+					puts "1";
+				when
+					puts "1";
+			end
+                	puts "sum меньше 10"
+                elsif(b < 15)
+                	puts "sum меньше 15"
+                else
+                    puts "sum больше 15"
+                end
+
+
+                if (sum & 1) == 0 then
+                    puts "четное"
+                else
+                    puts "нечетное"
+                end
+            end
+        end
+    end
+end

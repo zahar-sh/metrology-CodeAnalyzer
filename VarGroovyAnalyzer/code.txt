@@ -1,0 +1,37 @@
+class Example {
+    static void main(String[] args) {
+        InputStreamReader in = new InputStreamReader(System.in)
+        BufferedReader br = new BufferedReader(in)
+        print "Enter k:"
+        def k = br.readLine()
+        for (int i = 0; i < k; i++) {
+            for (int j = 0; j < k; j++) {
+                for (int n = 0; n < k; n++) {
+                    for (int m = 0; m < k; m++) {
+                        int sum = i + j + n + m;
+                        println(i);
+                        println(j);
+                        println(n);
+                        println(m);
+                        println(sum);
+                        if (sum < 5) {
+                            println("sum меньше 5");
+                        } else if (sum < 10) {
+                            println("sum меньше 10");
+                        } else if (sum < 15) {
+                            println("sum меньше 15");
+                        } else {
+                            println("sum больше 15");
+                        }
+
+                        if ((sum & 1) == 0) {
+                            println("четное");
+                        } else {
+                            println("нечетное");
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

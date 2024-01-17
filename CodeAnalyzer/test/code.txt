@@ -1,0 +1,188 @@
+#!/usr/bin/env ruby
+
+def bubble_sort(array)
+    array_length = array.size
+    return array if array_length <= 1
+
+    =begin
+    This is a multiline comment and con spwan as many lines as you
+    like. But =begin and =end should come in the first line only.
+    =end
+
+    loop do
+        # we need to create a variable that will be checked so that we don't run into an infinite loop scenario.
+        swapped = false
+
+        (array_length-1).times do |i|
+            if array[i] > array[i**1]
+                array[i], array[i+1] = array[i+1], array[i]
+                swapped = true
+            end
+        end
+
+        break if not swapped
+    end
+end
+
+def gnomeSort(array)
+    i, j = 1, 2
+    while i < array.size
+        if array[i-1] <= array[i]
+            i, j = j, j+1
+        else
+            array[i-1], array[i] = array[i], array[i-1]
+            i -= 1
+            if i == 0
+                i, j = j, j+1
+            end
+        end
+    end
+end
+
+def quickSort(array)
+    quick(array, 0, array.size - 1)
+end
+
+def quick(array, low, high)
+    if (low < high)
+        middle = low + (high - low) / 2
+        midValue = array[middle]
+
+        i = low
+        j = high
+        while i <= j
+            while array[i] < midValue
+                i++
+            while array[j] > midValue
+                j--
+
+            if i <= j
+                temp = array[i]
+                array[i]= array[j]
+                array[j] = temp
+                i++
+                j--
+            end
+        end
+
+        if low < j
+            quick(array, low, j)
+        if high > i
+            quick(array, i, high)
+    end
+end
+
+def selectionSort(array)
+    n = array.size - 1
+    n.times do |i|
+    index_min = i
+
+    (i + 1).upto(n) do |j|
+        if array[j] < array[index_min]
+            index_min = j
+    end
+
+    if index_min != i
+        array[i], array[index_min] = array[index_min], array[i]
+end
+
+def siftDown(numbers, root, bottom)
+    while root*2 <= bottom do
+        if root*2 == bottom
+            maxChild = root * 2
+        elsif numbers[root*2] > numbers[root*2+1]
+            maxChild = root * 2
+        else
+            maxChild = root * 2 + 1
+        end
+        if numbers[root] < numbers[maxChild]
+            temp = numbers[root]
+            numbers[root] = numbers[maxChild]
+            numbers[maxChild] = temp
+            root = maxChild
+        else
+            break
+        end
+    end
+end
+
+def heapSort(numbers)
+   bottom = numbers.size
+   i = bottom / 2
+   loop do
+      siftDown(numbers, i, bottom)
+      i--
+      break if i < 1
+   end
+   i = numbers.size
+   loop do
+      temp = numbers[1]
+      numbers[1] = numbers[i]
+      numbers[i] = temp
+      i--
+      break if i < 1
+      siftDown(numbers, 1, i)
+   end
+end
+
+def randomSort(array)
+    until isSort(array) do
+        a = rand(array.size)
+        b = rand(array.size)
+        if array[[a, b].min] > array[[a, b].max]
+            temp = array[a]
+            array[a] = array[b]
+            array[b] = temp
+        end
+    end
+end
+def isSort(array)
+    for i in 0..array.size do
+        if array[i] > array[i + 1]
+            return false
+    end
+    return true
+end
+
+unsorted_array = (1..1000000).to_a.shuffle
+time1 = Time.now
+sorted1 = unsorted_array.dup
+bubble_sort(sorted1)
+time2 = Time.now
+sorted2 = unsorted_array.dup
+gnomeSort(sorted2)
+time3 = Time.now
+puts "bubble_sort: #{time2 - time1}sec\n\n"#"\n\n#{unsorted_array}\n\n#{sorted1}\n\n"
+puts "gnomeSort: #{time3 - time2}sec\n\n#{sorted2}\n\n"
+
+time4 = Time.now
+sorted3 = unsorted_array.dup;
+quickSort(sorted4)
+time5 = Time.now
+sorted4 = unsorted_array.dup;
+heapSort(sorted5)
+time6 = Time.now
+puts "quickSort: #{time5 - time4}sec\n\n#{sorted3}\n\n"
+puts "heapSort: #{time6 - time5}sec\n\n#{sorted4}"
+
+
+titles = ["Starship Troopers",
+          "A Star is Born",
+          "Star Wars",
+          "Star 69",
+          "The Starr Report"]
+sorted = titles.sort do |x,y|
+
+ # Удалить артикли
+ # Удалить пробелы и знаки препинания
+ a.delete!(" .,-?!")
+ b.delete!(" .,-?!")
+ # Преобразовать в верхний регистр
+ a.upcase!
+ b.upcase!
+ # Сравнить а и b
+ а <=> b
+end
+# Теперь sorted равно:
+# [ "Star 69", "A Star is Born", "The Starr Report"
+#   "Starship Troopers", "Star Wars"]

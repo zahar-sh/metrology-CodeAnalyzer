@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane style="-fx-background-color: #2b2b2b;" xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.codeAnalyzer.MainWindowController">
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP"
+                                                    shortcut="UP"/>
+                            </accelerator>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#print" text="Print to file">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP"
+                                                    shortcut="UP"/>
+                            </accelerator>
+                        </MenuItem>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#clearAll" text="Clear all"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#info" text="About"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <center>
+        <HBox prefHeight="600.0" spacing="5.0" style="-fx-background-color: #ff0000;" BorderPane.alignment="CENTER">
+            <children>
+                <TableView fx:id="operatorsTableView" style="-fx-background-color: #707777;">
+                    <columns>
+                        <TableColumn fx:id="n1" maxWidth="1.7976931348623157E308" prefWidth="75.0" text="n1"/>
+                        <TableColumn fx:id="operators" maxWidth="1.7976931348623157E308" prefWidth="300.0"
+                                     text="Operators"/>
+                        <TableColumn fx:id="operatorsCount" maxWidth="1.7976931348623157E308" prefWidth="75.0"
+                                     text="count"/>
+                    </columns>
+                </TableView>
+                <TableView fx:id="operandsTableView" style="-fx-background-color: #707777;">
+                    <columns>
+                        <TableColumn fx:id="n2" maxWidth="1.7976931348623157E308" prefWidth="75.0" text="n2"/>
+                        <TableColumn fx:id="operands" maxWidth="1.7976931348623157E308" prefWidth="300.0"
+                                     text="Oprerands"/>
+                        <TableColumn fx:id="operandsCount" maxWidth="1.7976931348623157E308" prefWidth="75.0"
+                                     text="count"/>
+                    </columns>
+                </TableView>
+            </children>
+            <BorderPane.margin>
+                <Insets left="10.0" right="10.0" top="10.0"/>
+            </BorderPane.margin>
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+            </padding>
+        </HBox>
+    </center>
+    <bottom>
+        <Label fx:id="label" alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="110.0" text="Label"
+               textFill="WHITE" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </padding>
+        </Label>
+    </bottom>
+</BorderPane>

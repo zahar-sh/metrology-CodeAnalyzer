@@ -1,0 +1,180 @@
+#!/usr/bin/env ruby
+
+def bubble_sort(array)
+    array_length = array.size
+    if array_length <= 1
+        return array
+    end
+
+    loop do
+        # we need to create a variable that will be checked so that we don't run into an infinite loop scenario.
+        swapped = false
+
+        (array_length-1).times do |i|
+            if array[i] > array[i**1]
+                array[i], array[i+1] = array[i+1], array[i]
+                swapped = true
+            end
+        end
+
+        if not swapped
+            break
+        end
+    end
+end
+
+def gnomeSort(array)
+    i, j = 1, 2
+    while i < array.size
+        if array[i-1] <= array[i]
+            i, j = j, j+1
+        else
+            array[i-1], array[i] = array[i], array[i-1]
+            i -= 1
+            if i == 0
+                i = j
+                j++
+            end
+        end
+    end
+end
+
+def quickSort(array)
+    quick(array, 0, array.size - 1)
+end
+
+def quick(array, low, high)
+    if (low < high)
+        middle = low + (high - low) / 2
+        midValue = array[middle]
+
+        i = low
+        j = high
+        while i <= j
+            while array[i] < midValue
+                i++
+            end
+            while array[j] > midValue
+                j--
+            end
+            if i <= j
+                temp = array[i]
+                array[i]= array[j]
+                array[j] = temp
+                i++
+                j--
+            end
+        end
+
+        if low < j
+            quick(array, low, j)
+        end
+        if high > i
+            quick(array, i, high)
+        end
+    end
+end
+
+def selectionSort(array)
+    n = array.size - 1
+    n.times do |i|
+        index_min = i
+        (i + 1).upto(n) do |j|
+            if array[j] < array[index_min]
+                index_min = j
+            end
+        end
+
+        if index_min != i
+            array[i], array[index_min] = array[index_min], array[i]
+        end
+    end
+end
+
+def siftDown(numbers, root, bottom)
+    maxChild = 0
+    while root*2 <= bottom
+        if root*2 == bottom
+            maxChild = root * 2
+        elsif numbers[root*2] > numbers[root*2+1]
+            maxChild = root * 2
+        else
+            maxChild = root * 2 + 1
+        end
+        if numbers[root] < numbers[maxChild]
+            temp = numbers[root]
+            numbers[root] = numbers[maxChild]
+            numbers[maxChild] = temp
+            root = maxChild
+        else
+            break
+        end
+    end
+end
+
+def heapSort(numbers)
+   bottom = numbers.size
+   i = bottom / 2
+   loop do
+      siftDown(numbers, i, bottom)
+      i--
+      if i < 1
+        break
+      end
+   end
+   i = numbers.size
+   loop do
+      temp = numbers[1]
+      numbers[1] = numbers[i]
+      numbers[i] = temp
+      i--
+      if i < 1
+        break
+      end
+      siftDown(numbers, 1, i)
+   end
+end
+
+def randomSort(array)
+    until isSort(array)
+        a = rand(array.size)
+        b = rand(array.size)
+        if array[[a, b].min] > array[[a, b].max]
+            temp = array[a]
+            array[a] = array[b]
+            array[b] = temp
+        end
+    end
+end
+def isSort(array)
+    for i in 0..array.size
+        if array[i] > array[i + 1]
+            return false
+        end
+    end
+    return true
+end
+
+a = gets
+c = a + 5
+puts c
+unsorted_array = (1..1000000).to_a.shuffle
+time1 = Time.now
+sorted1 = unsorted_array.dup
+bubble_sort(sorted1)
+time2 = Time.now
+sorted2 = unsorted_array.dup
+gnomeSort(sorted2)
+time3 = Time.now
+puts "bubble_sort: #{time2 - time1}sec\n\n\n\n#{unsorted_array}\n\n#{sorted1}\n\n"
+puts "gnomeSort: #{time3 - time2}sec\n\n#{sorted2}\n\n"
+
+time4 = Time.now
+sorted3 = unsorted_array.dup;
+quickSort(sorted3)
+time5 = Time.now
+sorted4 = unsorted_array.dup;
+heapSort(sorted4)
+time6 = Time.now
+puts "quickSort: #{time5 - time4}sec\n\n#{sorted3}\n\n"
+puts "heapSort: #{time6 - time5}sec\n\n#{sorted4}"
